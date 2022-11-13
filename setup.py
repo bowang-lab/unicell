@@ -3,7 +3,7 @@ from setuptools import setup, find_namespace_packages
 with open("README.md", "r") as f:
   long_description = f.read()
 
-setup(name="UniCell",
+setup(name="unicell",
 			packages=find_namespace_packages(include=["optimizers", "dataloaders","models"]),
       version="0.0.1",
       description="Universal cell segmentation",
