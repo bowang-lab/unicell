@@ -6,5 +6,3 @@ Created on Sun Mar 20 14:23:55 2022
 @author: jma
 """
 
-from .unetr2d import *
-from .segformer_modules import *

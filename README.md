@@ -1,9 +1,9 @@
 # UniCell
 UniCell is a universal cellular segmentation tool for multi-modality microscopy images. It has three main features
 
-- It works for various microscopy images, such as brightfield image, fluorescent images, phase-contrast images, and differential interference contrast (DIC) images.
+- It works for various microscopy images, especially for the RGB images, e.g., bone marrow slides.
 - It works for various image format (e.g., png, bmp, jpg, tif, tiff) without format converting and does not require users to manually select segmentation models and image channels.
-- The inference speed is fast (~0.07s for 256x256 image and ~0.33s for 512x512 image). 
+- The inference speed is fast (~0.07s for 256x256 image and ~0.33s for 512x512 image on NVIDAI 2080Ti). 
 
 
 
@@ -18,7 +18,7 @@ pip install git+https://github.com/bowang-lab/unicell.git
 ## Train UniCell
 
 ```bash
-python train_unicell.py -data_path <path to training set> --model_folder_name <unicell>
+unicell_train -dir <path to training set> --model_folder <unicell> --batch_size 32
 ```
 
 Training set folder structure
@@ -46,7 +46,7 @@ UniCell does not have limitation on the image format. The corresponding labels s
 ## Inference
 
 ```bash
-python unicell_predict.py -i <input path> -o <output path> -m <model path>
+unicell_predict -i <input path> -o <output path> --pretrain_model unicell --contour_overlay
 ```
 
 
@@ -64,6 +64,8 @@ com_metric -g <path to ground truth folder> -s <path to segmentation folder> -th
 ## Graphical User Interface (GUI)
 
 We develop a GUI plugin based on [napari](https://napari.org/stable/), which enables users who may not have coding experience to analyze their microscopy images visually in real time.
+
+Install GUI: pip install napari-unicell
 
 ![napari-gui](./example/unicell-napari.png)
 

@@ -1,0 +1,82 @@
+# UniCell
+UniCell is a universal cellular segmentation tool for multi-modality microscopy images. It has three main features
+
+- It works for various microscopy images, especially for the RGB images, e.g., bone marrow slides.
+- It works for various image format (e.g., png, bmp, jpg, tif, tiff) without format converting and does not require users to manually select segmentation models and image channels.
+- The inference speed is fast (~0.07s for 256x256 image and ~0.33s for 512x512 image on NVIDAI 2080Ti). 
+
+
+
+## Installation
+
+```bash
+pip install git+https://github.com/bowang-lab/unicell.git
+```
+
+
+
+## Train UniCell
+
+```bash
+unicell_train -dir <path to training set> --model_folder <unicell> --batch_size 32
+```
+
+Training set folder structure
+
+```bash
+training_set/
+|----images
+|--------img1.png
+|--------img2.jpg
+|--------img3.bmp
+|--------img4.tif
+|--------img5.tiff
+|----labels
+|--------img1_label.tiff
+|--------img2_label.tiff
+|--------img3_label.tiff
+|--------img4_label.tiff
+|--------img5_label.tiff
+```
+
+UniCell does not have limitation on the image format. The corresponding labels should have a suffix `_label.tiff`. 
+
+
+
+## Inference
+
+```bash
+unicell_predict -i <input path> -o <output path> --pretrain_model unicell --contour_overlay
+```
+
+
+
+## Compute metrics
+
+We provide a interface to compute various metrics for cell segmentation results, including F1 score, precision, recall, the number of missing cells, the number of false-positive cells, and dice
+
+```bash
+com_metric -g <path to ground truth folder> -s <path to segmentation folder> -thre 0.5 0.7 0.9 -o <path to save folder> -n <csv name>
+```
+
+
+
+## Graphical User Interface (GUI)
+
+We develop a GUI plugin based on [napari](https://napari.org/stable/), which enables users who may not have coding experience to analyze their microscopy images visually in real time.
+
+install GUI: pip install napari
+
+![napari-gui](./example/unicell-napari.png)
+
+
+
+
+
+## [Online demo](https://huggingface.co/spaces/junma/UniCell)
+
+We deploy an online demo on huggingface, which enables users to directly upload the cell images to get the segmentation results. 
+
+> Remark: huggingface provides 2 free CPU for the deployment. So the inference can only use CPU, which is a little bit slow for large images (e.g., 1000x1000). We recommend using the command line interface or GUI  to analyze large images if GPU is available on your local desktop. 
+
+![huggingface](./example/huggingface_demo.png)

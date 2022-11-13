@@ -2,6 +2,7 @@
 # Copyright (c) 2021, NVIDIA Corporation. All rights reserved.
 #
 # This work is licensed under the NVIDIA Source Code License
+# Adapted from https://github.com/NVlabs/SegFormer
 # ---------------------------------------------------------------
 import torch
 import torch.nn as nn
@@ -645,14 +646,6 @@ class UniCell(nn.Module):
             return logits, dist
 
         # print(f"{dec1.shape=}, {dec2.shape=}, {dec3.shape=}, {dec4.shape=}, {logits.shape=}")
-
-img_size = 256
-in_chans = 3
-B = 2
-input_img = torch.randn((B,in_chans,img_size,img_size))
-
-b2 = UniCell(3, 3, img_size=img_size)
-logits, dist = b2(input_img)
 
 
 #%% B3
