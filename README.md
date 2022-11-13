@@ -10,7 +10,9 @@ UniCell is a universal cellular segmentation tool for multi-modality microscopy 
 ## Installation
 
 ```bash
-pip install git+https://github.com/bowang-lab/unicell.git
+git clone https://github.com/bowang-lab/unicell.git
+cd unicel
+pip install -e .
 ```
 
 
