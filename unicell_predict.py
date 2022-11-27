@@ -30,7 +30,7 @@ def main():
     parser.add_argument('-i', '--input_path', default='/media/jma/sg/junma/UniCell/AllCellImgs/CellUniverse/imagesTs', type=str,
                         help='testing data path')
     parser.add_argument('-o','--out_path', default='./seg-imagesTs', type=str, help='output path')
-    parser.add_argument('-m', '--model_path', default='./work_dir/demo', help='path where to save models and segmentation results')
+    parser.add_argument('-m', '--model_path', default='./work_dir/unicell', help='path where to save models and segmentation results')
     parser.add_argument('-pre', '--pretrain_model', default='unicell', help='pretrained model: unicell or uninuclei; if use customized model, please set None and specify model path')
     parser.add_argument('--contour_overlay', required=False, default=False, action="store_true", help='save segmentation boundary overlay')
     parser.add_argument('--overlay_color', required=False, default='green', type=str, help='color of overlay contour: white, green, blue, yellow, black')
@@ -61,12 +61,12 @@ def main():
             torch.hub.download_url_to_file('https://zenodo.org/record/7308987/files/model.pth?download=1', join(os.path.dirname(__file__), 'work_dir/unicell/model.pth'))
             checkpoint = torch.load(join(os.path.dirname(__file__), 'work_dir/unicell/model.pth'), map_location=torch.device(device))
     elif args.pretrain_model == 'uninuclei':
-        if os.path.isfile(join(args.work_dir, 'uninuclei/model.pth')):
-            checkpoint = torch.load(join(args.work_dir, 'uninuclei/model.pth'), map_location=torch.device(device))
+        if os.path.isfile(join(os.path.dirname(__file__), 'work_dir/uninuclei/model.pth')):
+            checkpoint = torch.load(join(os.path.dirname(__file__), 'work_dir/uninuclei/model.pth'), map_location=torch.device(device))
         else:
-            os.makedirs(join(args.work_dir, 'unicell'), exist_ok=True)
-            torch.hub.download_url_to_file('https://zenodo.org/record/7308990/files/model.pth?download=1', join(args.work_dir, 'uninuclei/model.pth'))
-            checkpoint = torch.load(join(args.work_dir, 'uninuclei/model.pth'), map_location=torch.device(device))
+            os.makedirs(join(os.path.dirname(__file__), 'work_dir/uninuclei'), exist_ok=True)
+            torch.hub.download_url_to_file('https://zenodo.org/record/7308990/files/model.pth?download=1', join(os.path.dirname(__file__), 'work_dir/uninuclei/model.pth'))
+            checkpoint = torch.load(join(os.path.dirname(__file__), 'work_dir/uninuclei/model.pth'), map_location=torch.device(device))
     else:
         checkpoint = torch.load(join(args.model_path, 'model.pth'))
 
