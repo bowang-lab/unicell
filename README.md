@@ -1,8 +1,8 @@
 # UniCell
 UniCell is a universal cellular segmentation tool for multi-modality microscopy images. It has three main features
 
-- It works for various microscopy images, especially for the RGB images, e.g., bone marrow slides.
-- It works for various image format (e.g., png, bmp, jpg, tif, tiff) without format converting and does not require users to manually select segmentation models and image channels.
+- It works for various microscopy images, especially for RGB images, e.g., bone marrow slides. We also provide a new annotated RGB cell image dataset ([download](https://drive.google.com/file/d/1sD8N8rpgzKfOe1nX5pp8xXUWcYR5s6BX/view?usp=share_link)), which is complementary to existing cell segmentation datasets.
+- It works for various image formats (e.g., png, bmp, jpg, tif, tiff) without format converting and does not require users to manually select segmentation models and image channels.
 - The inference speed is fast (~0.07s for 256x256 image and ~0.33s for 512x512 image on NVIDAI 2080Ti). 
 
 
