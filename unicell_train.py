@@ -42,8 +42,7 @@ def main():
     parser.add_argument('--input_size', default=256, type=int, help='segmentation classes')
 
     # Training parameters
-    parser.add_argument('--pre_train', default=False, help='use pretrained model')
-    parser.add_argument('--pre_train_path', default='./', help='use pretrained model')
+    parser.add_argument('--pre_train_model', default=None, help='path to the pretrained model')
     parser.add_argument('--batch_size', default=8, type=int, help='Batch size per GPU')
     parser.add_argument('--max_epochs', default=4000, type=int)
     parser.add_argument('--val_interval', default=200, type=int) 
@@ -90,9 +89,9 @@ def main():
     model.to(device)
 
 
-    if args.pre_train:
-        model.load_state_dict(torch.load(join(args.pre_train_path, 'model_latest.pth'), map_location=device))
-        print('loaded pretrined model:', join(args.pre_train_path, 'model_latest.pth'))
+    if args.pre_train_model is not None:
+        model.load_state_dict(torch.load(args.pre_train_model, map_location=device)['model_state_dict'])
+        print('loaded pretrined model:', args.pre_train_model)
 
     loss_interoir = monai.losses.DiceCELoss(to_onehot_y=False, softmax=False)
     loss_dist = nn.MSELoss()
@@ -145,8 +144,7 @@ def main():
         # writer.add_scalar("train_loss", epoch_loss, epoch)
         checkpoint = {'epoch': epoch,
                 'model_state_dict': model.state_dict(),
-                'optimizer_state_dict': optimizer.state_dict(),
-                'loss': epoch_loss_values,
+                'optimizer_state_dict': optimizer.state_dict()
                 }
         torch.save(checkpoint, join(model_path, 'model.pth'))
         plt.plot(epoch_loss_values)
@@ -188,13 +186,6 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-
-
-
-
-
 
 
 
